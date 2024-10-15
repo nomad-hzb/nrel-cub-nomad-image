@@ -28,7 +28,14 @@ plugins = [
   'hzb-combinatorial-libraries @ git+https://github.com/nomad-hzb/hzb-combinatorial-libraries-plugin.git',
   'nomad-chemical-energy @ git+https://github.com/nomad-hzb/nomad-chemical-energy.git@39f19c5f235fb6a81008c4bcda6cdcaf4ce05846'
 ]
-jupyter = []
+jupyter = ['voila',
+'ipyaggrid',
+'ipysheet',
+'ipydatagrid',
+'jupyter-flex',
+'baybe',
+'pyvis'
+]
 dev = ["nomad-lab[parsing, infrastructure, dev]>=1.3.8"]
 
 [tool.uv]

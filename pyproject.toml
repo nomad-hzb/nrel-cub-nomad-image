@@ -34,7 +34,7 @@ jupyter = [
 'ipysheet',
 'ipydatagrid',
 'jupyter-flex',
- 'baybe',
+#'baybe',
 'pyvis'
 ]
 dev = ["nomad-lab[parsing, infrastructure, dev]>=1.3.9"]

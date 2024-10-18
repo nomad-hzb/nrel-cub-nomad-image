@@ -47,7 +47,7 @@ RUN adduser \
     --gecos "" \
     --home "/nonexistent" \
     --shell "/sbin/nologin" \
-    --no-create-home \
+    #--no-create-home \
     --uid "${UID}" \
     nomad
 
@@ -81,7 +81,7 @@ RUN adduser \
     --gecos "" \
     --home "/nonexistent" \
     --shell "/sbin/nologin" \
-    --no-create-home \
+    #--no-create-home \
     --uid "${UID}" \
     nomad
 

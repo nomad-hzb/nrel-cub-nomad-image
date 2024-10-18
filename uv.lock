@@ -2740,8 +2740,8 @@ requires-dist = [
     { name = "nomad-baseclasses", marker = "extra == 'plugins'", git = "https://github.com/nomad-hzb/nomad-baseclasses.git" },
     { name = "nomad-chemical-energy", marker = "extra == 'plugins'", git = "https://github.com/nomad-hzb/nomad-chemical-energy.git" },
     { name = "nomad-hysprint", marker = "extra == 'plugins'", git = "https://github.com/nomad-hzb/nomad-hysprint.git" },
-    { name = "nomad-lab", extras = ["parsing", "infrastructure"], specifier = ">=1.3.9" },
-    { name = "nomad-lab", extras = ["parsing", "infrastructure", "dev"], marker = "extra == 'dev'", specifier = ">=1.3.9" },
+    { name = "nomad-lab", extras = ["parsing", "infrastructure"], specifier = ">=1.3.10" },
+    { name = "nomad-lab", extras = ["parsing", "infrastructure", "dev"], marker = "extra == 'dev'", specifier = ">=1.3.10" },
     { name = "nomad-material-processing", marker = "extra == 'plugins'" },
     { name = "perovskite-solar-cell-database", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-perovskite-solar-cells-database.git?rev=f394d21abafeb659729af0c94e5f90949fce01c1#f394d21abafeb659729af0c94e5f90949fce01c1" },
     { name = "pyvis", marker = "extra == 'jupyter'" },
@@ -2755,7 +2755,7 @@ source = { git = "https://github.com/nomad-hzb/nomad-hysprint.git#dde2f9eea9de58
 
 [[package]]
 name = "nomad-lab"
-version = "1.3.9"
+version = "1.3.10"
 source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }
 dependencies = [
     { name = "aniso8601", marker = "python_full_version >= '3.11'" },
@@ -2797,7 +2797,7 @@ dependencies = [
     { name = "wrapt", marker = "python_full_version >= '3.11'" },
     { name = "xarray", marker = "python_full_version >= '3.11'" },
 ]
-sdist = { url = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/files/c6aa53275508a5b083577e28ed3428ac126541be79acf4c9613314c7f7d0a35b/nomad-lab-1.3.9.tar.gz", hash = "sha256:c6aa53275508a5b083577e28ed3428ac126541be79acf4c9613314c7f7d0a35b" }
+sdist = { url = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/files/26d9fb6bb599efdac456f279766b41bd0e139924c9af509645f9a8e5f76c81e3/nomad-lab-1.3.10.tar.gz", hash = "sha256:26d9fb6bb599efdac456f279766b41bd0e139924c9af509645f9a8e5f76c81e3" }
 
 [package.optional-dependencies]
 dev = [

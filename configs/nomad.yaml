@@ -2,7 +2,7 @@ services:
   api_host: 'localhost'
   api_base_path: '/nomad-oasis'
   upload_limit: 1000
-  admin_user_id: 'e2796594-6a85-4a0b-a7ae-5862505c24d7'
+  # admin_user_id: ''
   upload_members_group_search_enabled: true
 
 
@@ -60,7 +60,7 @@ elastic:
 
 ui:
   theme:
-    title: "NOMAD SE HZB"
+    title: "NOMAD NREL CUB"
   unit_systems: 
     selected: "SI"
   apps:

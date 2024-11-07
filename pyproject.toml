@@ -7,9 +7,9 @@ classifiers = [
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
 name = "nomad-distribution"
 description = "nomad distribution template"
@@ -24,10 +24,7 @@ plugins = [
   "perovskite-solar-cell-database @ git+https://github.com/FAIRmat-NFDI/nomad-perovskite-solar-cells-database.git",
   'nomad-material-processing @ git+https://github.com/FAIRmat-NFDI/nomad-material-processing.git@103-add-specialized-combinatorialsample-schema',
   'nomad-baseclasses @ git+https://github.com/nomad-hzb/nomad-baseclasses.git',
-  'nomad-hysprint @ git+https://github.com/nomad-hzb/nomad-hysprint.git',
-  'hzb-combinatorial-libraries @ git+https://github.com/nomad-hzb/hzb-combinatorial-libraries-plugin.git',
-  'nomad-chemical-energy @ git+https://github.com/nomad-hzb/nomad-chemical-energy.git',
-  "nomad-pvcomb @ git+https://codebase.helmholtz.cloud/pvcomb/nomad-pvcomb.git@develop"
+  'nomad-nrel @ git+https://github.com/nomad-hzb/nomad-nrel.git',
 ]
 jupyter = [
 'voila',

@@ -1,29 +1,573 @@
 services:
-  api_host: "localhost"
-  api_base_path: "/nomad-oasis"
+  api_host: 'localhost'
+  api_base_path: '/nomad-oasis'
+  upload_limit: 1000
+  admin_user_id: 'e2796594-6a85-4a0b-a7ae-5862505c24d7'
+  upload_members_group_search_enabled: true
+
+
+logstash:
+  enable: false
 
 oasis:
   is_oasis: true
   uses_central_user_management: true
 
 north:
-  jupyterhub_crypt_key: "978bfb2e13a8448a253c629d8dd84ff89587f30e635b753153960930cad9d36d"
+  jupyterhub_crypt_key: 'e393b02b322ee1ae5c27d44b164e8e895f4f014af477d792bf27cfbdf6330fd3'
+  enabled: true
   tools:
+    include:
+      - voila
+      - jupyter2
     options:
-      jupyter:
-        image: ghcr.io/nomad-hzb/hzb-se-image-2/jupyter:main
+      jupyter2:
+        short_description: A jupyter webapp container with voila opens notebook
+        description: A jupyter hub webapp container with voila installed.
+        image: gitlab-registry.mpcdf.mpg.de/nomad-lab/north/voila:latest
+        path_prefix: lab/tree
+        with_path: true
+        mount_path: /home/jovyan
+        file_extensions:
+          - ipynb
+        maintainer:
+          - name: Michael Götte
+            email: michael.goette@helmholtz-berlin.de
+      voila:
+        short_description: A jupyter webapp container with voila opens voila
+        description: A jupyter hub webapp container with voila installed.
+        image: gitlab-registry.mpcdf.mpg.de/nomad-lab/north/voila:latest
+        path_prefix: voila/render
+        with_path: true
+        mount_path: /home/jovyan
+        file_extensions:
+          - ipynb
+        maintainer:
+          - name: Michael Götte
+            email: michael.goette@helmholtz-berlin.de
 
 meta:
-  deployment: "oasis"
-  deployment_url: "https://my-oasis.org/api"
-  maintainer_email: "me@my-oasis.org"
-
-logstash:
-  enable: false
+  deployment: 'oasis'
+  deployment_url: 'https://my-oasis.org/api'
+  maintainer_email: 'michael.goette@helmholtz-berlin.de'
 
 mongo:
-  db_name: nomad_oasis_v1
+    db_name: nomad_oasis_v1
 
 elastic:
-  entries_index: nomad_oasis_entries_v1
-  materials_index: nomad_oasis_materials_v1
+    entries_index: nomad_oasis_entries_v1
+    materials_index: nomad_oasis_materials_v1
+
+ui:
+  theme:
+    title: "NOMAD SE HZB"
+  unit_systems: 
+    selected: "SI"
+  apps:
+    # Configures which apps to show. Note that the app for 'entries' (which
+    # corresponds to searching all entries) has to be included at the moment.
+    include:
+      - 'eln'
+      - 'solarcells'
+      - 'entries'
+      - 'nkdata'
+      - 'voila'  
+    # Configures a new app for samples
+    options:
+      voila:
+        # Label of the App
+        label: 'Voila'
+        # Path used in the URL, must be unique
+        path: 'voila'
+        # Used to categorize apps in the explore menu
+        category: 'Use Cases'
+        # Brief description used in the app menu
+        description: 'Search Voila notebooks.'
+        # Longer description that can also use markdown
+        # Controls which columns are shown in the results table
+        columns:
+          selected:
+            - 'entry_name'
+            - 'entry_create_time'
+            - 'entry_type'
+            - 'authors'
+            - 'upload_name'
+            - 'upload_id'
+          options:
+            entry_name:
+              label: 'Name'
+              align: 'left'
+            entry_create_time:
+              label: 'Entry time'
+              align: 'left'
+            entry_type:
+              label: 'Entry type'
+              align: 'left'
+            authors:
+              label: 'Authors'
+              align: 'left'
+            upload_name:
+              label: 'Upload name'
+              align: 'left'
+            upload_id:
+              label: 'Upload id'
+              align: 'left'
+            upload_create_time:
+              label: 'Upload time'
+              align: 'left'
+        # Dictionary of search filters that are always enabled for queries made within
+        # this app. This is especially important to narrow down the results to the
+        # wanted subset. Any available search filter can be targeted here.
+        filters:
+          include:
+            - '*baseclasses.voila.VoilaNotebook'
+        filters_locked:
+          section_defs.definition_qualified_name: 'baseclasses.voila.VoilaNotebook'
+
+        # Controls the filter menus shown on the left
+        filter_menus:
+          options:
+            custom_quantities:
+              label: 'User Defined Quantities'
+              level: 0
+              size: 'l'
+            author:
+              label: 'Author / Origin / Dataset'
+              level: 0
+              size: 'm'
+            metadata:
+              label: 'Visibility / IDs / Schema'
+              level: 0
+        dashboard:
+          widgets:
+            - type: 'terms'
+              showinput: true
+              scale: 'linear'
+              quantity: 'authors.name'
+              layout:
+                xxl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                xl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                lg:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                md:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                sm:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+      nkdata:
+        # Label of the App
+        label: 'NK Data'
+        # Path used in the URL, must be unique
+        path: 'nkdata'
+        # Used to categorize apps in the explore menu
+        category: 'Experiment'
+        # Brief description used in the app menu
+        description: 'An app customized for NK Data.'
+        # Longer description that can also use markdown
+        # Controls which columns are shown in the results table
+        columns:
+          selected:
+            - 'entry_name'
+            - 'data.chemical_composition_or_formulas#baseclasses.data_transformations.nkdata_analysis.NKData'
+            - 'entry_create_time'
+            - 'entry_type'
+            - 'authors'
+            - 'upload_name'
+          options:
+            entry_name:
+              label: 'Name'
+              align: 'left'
+            results.material.elements:
+              label: 'Elements'
+              align: 'left'
+            data.chemical_composition_or_formulas#baseclasses.data_transformations.nkdata_analysis.NKData:
+              label: 'Elements and Formulas'
+              align: 'left'
+            results.material.chemical_formula_hill:
+              label: 'Formula'
+              align: 'left'
+            entry_type:
+              label: 'Entry type'
+              align: 'left'
+            upload_name:
+              label: 'Upload name'
+              align: 'left'
+            upload_id:
+              label: 'Upload id'
+              align: 'left'
+            upload_create_time:
+              label: 'Upload time'
+              align: 'left'
+            entry_create_time:
+              label: 'Entry time'
+              align: 'left'
+            authors:
+              label: 'Authors'
+              align: 'left'
+        # Dictionary of search filters that are always enabled for queries made within
+        # this app. This is especially important to narrow down the results to the
+        # wanted subset. Any available search filter can be targeted here.
+        filters:
+          include:
+            - '*baseclasses.data_transformations.nkdata_analysis.NKData'
+        filters_locked:
+          section_defs.definition_qualified_name: 'baseclasses.data_transformations.nkdata_analysis.NKData'
+
+        # Controls the filter menus shown on the left
+        filter_menus:
+          options:
+            material:
+              label: 'Material'
+              level: 0
+            elements:
+              label: 'Elements / Formula'
+              level: 1
+              size: 'xl'
+            eln:
+              label: 'Electronic Lab Notebook'
+              level: 0
+            custom_quantities:
+              label: 'User Defined Quantities'
+              level: 0
+              size: 'l'
+            author:
+              label: 'Author / Origin / Dataset'
+              level: 0
+              size: 'm'
+            metadata:
+              label: 'Visibility / IDs / Schema'
+              level: 0
+        dashboard:
+          widgets:
+            - type: 'periodictable'
+              scale: 'linear'
+              quantity: 'results.material.elements'
+              layout:
+                xxl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 12
+                  y: 0
+                  x: 6
+                xl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 12
+                  y: 0
+                  x: 0
+                lg:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 12
+                  y: 0
+                  x: 6
+                md:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 12
+                  y: 0
+                  x: 6
+                sm:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 12
+                  y: 0
+                  x: 6
+      eln:
+        label: 'HZB ELN'
+        path: 'eln'
+        resource: 'entries'
+        breadcrumb: 'ELN'
+        category: 'Experiment'
+        description: 'Search your experimental data'
+        help:
+          title: 'Experiments search'
+          content: 'This page allows you to search **experiments** within the HZB-NOMAD.'
+        # Configures search result columns
+        columns:
+          selected:
+            - 'entry_name'
+            # - 'results.material.chemical_formula_hill'
+            - 'results.eln.methods'
+            - 'entry_create_time'
+            - 'entry_type'
+            # - 'upload_create_time'
+            - 'authors'
+            - 'upload_name'
+          options:
+            entry_name:
+              label: 'Name'
+              align: 'left'
+            results.eln.methods:
+              label: 'Methods'
+              align: 'left'
+            results.material.chemical_formula_hill:
+              label: 'Formula'
+              align: 'left'
+            entry_type:
+              label: 'Entry type'
+              align: 'left'
+            upload_name:
+              label: 'Upload name'
+              align: 'left'
+            upload_id:
+              label: 'Upload id'
+              align: 'left'
+            upload_create_time:
+              label: 'Upload time'
+              align: 'left'
+            entry_create_time:
+              label: 'Entry time'
+              align: 'left'
+            authors:
+              label: 'Authors'
+              align: 'left'
+        # Configures search result rows
+        rows:
+          actions:
+            enabled: true
+          details:
+            enabled: true
+          selection:
+            enabled: true
+        # Which menus to show
+        filter_menus:
+          options:
+            material:
+              label: 'Material'
+              level: 0
+            elements:
+              label: 'Elements / Formula'
+              level: 1
+              size: 'xl'
+            eln:
+              label: 'Electronic Lab Notebook'
+              level: 0
+            custom_quantities:
+              label: 'User Defined Quantities'
+              level: 0
+              size: 'l'
+            author:
+              label: 'Author / Origin / Dataset'
+              level: 0
+              size: 'm'
+            metadata:
+              label: 'Visibility / IDs / Schema'
+              level: 0
+            optimade:
+              label: 'Optimade'
+              level: 0
+              size: 'm'
+        # Configures a default, non-mutable filters that are applied to the
+        # data to pre-filter results from all entries
+        filters_locked:
+          quantities: 'data'
+        dashboard:
+          widgets:
+            - type: 'terms'
+              showinput: true
+              scale: 'linear'
+              quantity: 'authors.name'
+              layout:
+                xxl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                xl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                lg:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                md:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                sm:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+            - type: 'terms'
+              showinput: true
+              scale: 'linear'
+              # label: 'Measurement | Processes'
+              quantity: 'results.eln.methods'
+              layout:
+                xxl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 6
+                xl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 0
+                lg:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 6
+                md:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 6
+                sm:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 6
+            - type: 'terms'
+              showinput: true
+              scale: 'linear'
+              # label: 'Sample and Batch IDs'
+              quantity: 'results.eln.lab_ids'
+              layout:
+                xxl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                xl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                lg:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                md:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                sm:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12  
+            - type: 'terms'
+              showinput: true
+              scale: 'linear'
+              # label: 'Sample and Batch IDs'
+              quantity: 'results.eln.sections'
+              layout:
+                xxl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                xl:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                lg:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                md:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+                sm:
+                  minH: 3
+                  minW: 3
+                  h: 6
+                  w: 6
+                  y: 0
+                  x: 12
+       
+      
+plugins:
+#   # We only include our schema here. Without the explicit include, all plugins will be
+#   # loaded. Many build in plugins require more dependencies. Install nomad-lab[parsing]
+#   # to make all default plugins work.
+  entry_points:
+    include: [
+    "nomad_nrel.schema_packages:nrel_package",
+    "nomad_nrel.parsers:nrel_jv_parser",
+    "nomad_nrel.parsers:nrel_experiment_parser"
+    ]
+    
